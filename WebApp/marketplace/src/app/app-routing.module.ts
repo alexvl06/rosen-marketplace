@@ -6,10 +6,10 @@ import {OfferCreationComponent} from './offers/offer-creation/offer-creation.com
 
 
 const routes: Routes = [
-  {path: 'a', component: LoginComponent, pathMatch: 'full'},
-  {path: 'b', component: OfferListComponent, pathMatch: 'full'},
-  {path: 'c', component: OfferCreationComponent, pathMatch: 'full'},
-];
+  {path: '', component: LoginComponent, pathMatch: 'full'},
+  {path: 'offer/list', component: OfferListComponent},
+  {path: 'offer/creation', component: OfferCreationComponent},
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

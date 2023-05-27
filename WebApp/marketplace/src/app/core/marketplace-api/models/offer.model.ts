@@ -1,7 +1,9 @@
-export class OfferModel {
-
-  // TODO: Complete the offer model
-  constructor(public user: string ) {
-
-  }
+export interface OfferModel {
+  title:string
+  imgURL:string
+  date: Date
+  location:string
+  category:string
+  username:string
+  description:string
 }

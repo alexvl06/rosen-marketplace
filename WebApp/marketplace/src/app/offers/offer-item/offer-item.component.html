@@ -1,12 +1,16 @@
-<div>
-  <h3 class="title"></h3>
-  <div class="category"></div>
+<div class="card card-body col-12 col-md-6 col-lg-4">
+  <h3 class="title card-title bg-dark text-white">{{ offer.title }}</h3>
+  <div class="category">{{ offer.category }}</div>
   <div class="picture">
-    <img src="" alt="offer-image" />
+    <img [src]="offer.imgURL" alt="offer-image" />
   </div>
   <div class="byline">
-    <span class="user"></span>
-    <span class="published-on"></span>
+    <span class="user">{{ offer.username }}</span>
+    <span class="published-on">{{ offer.date| date:'short' }}</span>
   </div>
-  <p class="description"></p>
+  <p class="description card-text">{{ offer.description }}</p>
+  <div class="">
+    <label>I'm looking for</label>
+  </div>
+
 </div>

@@ -1,1 +1,10 @@
-<p>offer-list works!</p>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-flex flex-wrap justify-content-center">
+      <app-offer-item *ngFor="let offer of offers" [offer] ="offer"></app-offer-item>
+    </div>
+
+  </div>
+</div>
+

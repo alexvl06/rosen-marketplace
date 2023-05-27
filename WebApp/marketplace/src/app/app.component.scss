@@ -1,5 +1,16 @@
 .main-container {
+  position: relative;
   display: grid;
   grid-template-rows: 55px 0 auto;
   grid-template-areas: "top-bar" "outlet" "content";
+}
+
+.top-bar{
+
+  z-index: 2;
+}
+
+router-outlet{
+  position: absolute;
+  z-index: 1;
 }

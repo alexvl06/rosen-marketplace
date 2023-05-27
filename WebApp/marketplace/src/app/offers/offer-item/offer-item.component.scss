@@ -1,0 +1,59 @@
+h3{
+  padding: 10px;
+  margin: 20px 0px;
+}
+
+.category{
+  text-align: end;
+  margin:10px;
+  opacity: .3;
+}
+
+.picture{
+  display: flex;
+  align-self:center;
+
+}
+
+.byline{
+ padding: 10px;
+ opacity: 0.5;
+}
+
+.description{
+  margin: 10px 20px 30px 20px;
+}
+.user, .published-on{
+  padding: 10px;
+}
+
+div>label{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  border-radius: 1% 1% 30% 1%;
+  left: 70%;
+  bottom: 0%;
+}
+
+label{
+
+  background-color: #0C6364 ;
+  color: white;
+  padding: 10px;
+  width: 150px;
+  margin-left: auto;
+  margin-top: auto;
+  text-align: start;
+
+}
+
+.card{
+  position: relative;
+  margin:20px;
+  padding:0;
+  border-radius: 2% 2% 10% 2%;
+  width: 500px;
+  height: 700px;
+}
+
