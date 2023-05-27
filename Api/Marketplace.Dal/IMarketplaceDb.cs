@@ -14,4 +14,5 @@ namespace Marketplace.Dal;
 public interface IMarketplaceDb
 {
     Task<User[]> GetUsersAsync();
+    Task<Offer[]> GetOffersByPageIndex(int pageIndex, int pageSize);
 }

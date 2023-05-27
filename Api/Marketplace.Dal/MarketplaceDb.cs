@@ -31,6 +31,44 @@ namespace Marketplace.Dal
             _connection.Dispose();
         }
 
+        public async Task<Offer[]> GetOffersByPageIndex(int pageIndex, int pageSize)
+        {
+            await using var command = new SqliteCommand(
+                $"SELECT O.Description, O.Location, O.PictureUrl, O.PublishedOn, O.Title, U.Username as Username, C.Name as CategoryName FROM Offer O LEFT JOIN User U ON U.Id = O.UserId LEFT JOIN Category C ON O.CategoryId = C.Id ORDER BY O.PublishedOn DESC LIMIT {pageSize} OFFSET {(pageIndex-1)*pageSize};", _connection
+            );
+
+            try
+            {
+                await using var reader = await command.ExecuteReaderAsync();
+
+
+                var results = new List<Offer>();
+
+                while (await reader.ReadAsync())
+                {
+                    var offer = new Offer
+                    {
+                        Description= reader.GetString(reader.GetOrdinal("Description")),
+                        Location = reader.GetString(reader.GetOrdinal("Location")),
+                        CategoryName = reader.GetString(reader.GetOrdinal("CategoryName")),
+                        PictureUrl = reader.GetString(reader.GetOrdinal("PictureUrl")),
+                        PublishedOn = reader.GetDateTime(reader.GetOrdinal("PublishedOn")),
+                        Title = reader.GetString(reader.GetOrdinal("Title")),
+                        Username = reader.GetString(reader.GetOrdinal("Username"))
+                    };
+
+                    results.Add(offer);
+                }
+
+                return results.ToArray();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
         public async Task<User[]> GetUsersAsync()
         {
             await using var command = new SqliteCommand(

@@ -64,7 +64,9 @@ namespace Marketplace.Api
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Marketplace.Api", Version = "v1" }); });
 
             services.AddScoped<IUserBl, UserBl>();
+            services.AddScoped<IOfferBl, OfferBl>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IOfferRepository, OfferRepository>();
         }
 
         #endregion
