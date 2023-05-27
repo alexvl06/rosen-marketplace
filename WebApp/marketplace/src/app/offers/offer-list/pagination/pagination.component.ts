@@ -1,4 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { OffersModule } from '../../offers.module';
+import { Page } from 'src/app/core/models/page.model';
 
 @Component({
   selector: 'app-pagination',
@@ -8,45 +10,33 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 export class PaginationComponent implements OnInit {
   @Input() totalPages:number = 0;
   @Output() pageIndex = new EventEmitter<number>();
-  counter = Array
   index = 1
-  btnIndexes:number[]
-  partialStart:number = 1;
-  partialEnd:number =7
+  nextIndexes:number[] = [];
+  previousIndexes:number[] = []
+  page:Page<OffersModule>;
   ngOnInit(){
-    this.createNumberArray(this.partialStart, this.partialEnd)
+    this.page = new Page([],this.index,this.totalPages)
   }
 
   updatePage(index:number){
     this.index = index;
+    this.page.PageIndex = this.index
     this.pageIndex.next(index)
   }
 
   nextIndex(){
-    if(this.index <this.totalPages){
-      this.index ++
+    if(this.page.nextPageIndex){
+      this.index++
+      this.page.PageIndex = this.index
       this.pageIndex.next(this.index)
-    }
-    if(this.index > this.btnIndexes[this.btnIndexes.length-1]){
-      this.partialStart++
-      this.partialEnd++
-      this.createNumberArray(this.partialStart,this.partialEnd)
     }
   }
 
   preIndex(){
     if(this.index >1){
-      this.index --
+      this.index--
+      this.page.PageIndex = this.index
       this.pageIndex.next(this.index)
     }
-    if(this.index < this.btnIndexes[0]){
-      this.partialStart--
-      this.partialEnd--
-      this.createNumberArray(this.partialStart,this.partialEnd)
-    }
-  }
-
-  createNumberArray(start:number, end:number){
-    this.btnIndexes = Array.from({length:end-start+1},(_,index)=>start+index)
   }
 }
