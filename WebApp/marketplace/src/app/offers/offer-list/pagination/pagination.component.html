@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="row">
+    <div class="d-flex flex-row justify-content-center">
+      <button [ngClass]="index==1?'d-none':'d-flex'" (click)="preIndex()" class="btn btn-light"><<</button>
+      <button (click)="updatePage(btn)" [ngClass]="btn===index?'btn-primary':'btn-light'" class="btn" *ngFor="let btn of btnIndexes">{{btn}}</button>
+      <button [ngClass]="index==totalPages?'d-none':'d-flex'"  (click)="nextIndex()" class="btn btn-light">>></button>
+    </div>
+
+  </div>
+</div>

@@ -12,7 +12,11 @@ h3{
 .picture{
   display: flex;
   align-self:center;
-
+  width: 330px;
+  img{
+    width:100%;
+    height:auto;
+  }
 }
 
 .byline{

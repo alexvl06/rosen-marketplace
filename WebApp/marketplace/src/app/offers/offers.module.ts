@@ -5,12 +5,14 @@ import { OfferCreationComponent } from "./offer-creation/offer-creation.componen
 import { OfferListComponent } from "./offer-list/offer-list.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { CoreModule } from "../core/core.module";
+import { PaginationComponent } from './offer-list/pagination/pagination.component';
 
 @NgModule({
   declarations: [
     OfferItemComponent,
     OfferCreationComponent,
     OfferListComponent,
+    PaginationComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, CoreModule],
   exports:[OfferItemComponent]

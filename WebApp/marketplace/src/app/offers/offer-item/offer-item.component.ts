@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {OfferModel} from '../../core/marketplace-api/models/offer.model';
 
 @Component({
@@ -6,15 +6,12 @@ import {OfferModel} from '../../core/marketplace-api/models/offer.model';
   templateUrl: './offer-item.component.html',
   styleUrls: ['./offer-item.component.scss']
 })
-export class OfferItemComponent implements OnInit {
+export class OfferItemComponent{
 
   @Input()
   offer: OfferModel;
 
   constructor() { }
 
-  ngOnInit(): void {
-    console.log(this.offer)
-  }
 
 }
