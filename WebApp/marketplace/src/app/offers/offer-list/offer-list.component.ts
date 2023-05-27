@@ -22,7 +22,9 @@ export class OfferListComponent implements OnInit {
     this.marketplaceService.getOffers(1, this.pageSize).subscribe(offers=>{
       this.offers = offers
       this.totalPages = this.marketplaceService.totalPages;
-    })
+      console.log(offers)
+    }
+    )
   }
 
   updatePage(index:number){

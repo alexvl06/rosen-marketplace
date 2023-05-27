@@ -81,9 +81,8 @@ export class MarketplaceApiService {
     return of(this.offers.slice((page-1)*pageSize,(page)*pageSize));
   }
 
-  postOffer(): Observable<string> {
-    // TODO: implement the logic to post a new offer, also validate whatever you consider before posting
-    return of('');
+  postOffer(offer:OfferModel) {
+    return of(this.offers.push(offer));
   }
 
   getCategories(): Observable<string[]> {

@@ -1,6 +1,5 @@
 import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import {FormControl, Validators} from '@angular/forms'
 
 @Component({
   selector: 'app-login',
@@ -9,16 +8,15 @@ import {FormControl, Validators} from '@angular/forms'
 })
 export class LoginComponent {
 
-  input = new FormControl('', [Validators.required])
   constructor(
     private router:Router
   ) { }
 
 
   onSubmit(){
-    sessionStorage.setItem('username',this.input.value)
-    console.log(sessionStorage.getItem('username'))
-    //this.router.navigate(['offer/list'])
+    let input:HTMLInputElement = document.getElementById('user-name') as HTMLInputElement
+    sessionStorage.setItem('username', input.value)
+    this.router.navigate(['offer/list'])
 
   }
 }

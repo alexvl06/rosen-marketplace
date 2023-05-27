@@ -1,10 +1,10 @@
 export interface OfferModel {
   title:string
   imgURL:string
-  date: Date
+  date?: Date
   location:string
   category:Category
-  username:string
+  username?:string
   description:string
 }
 
