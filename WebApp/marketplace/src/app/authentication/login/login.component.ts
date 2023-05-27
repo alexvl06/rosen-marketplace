@@ -7,17 +7,18 @@ import {FormControl, Validators} from '@angular/forms'
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
-  input = new FormControl('',[Validators.required])
+  input = new FormControl('', [Validators.required])
   constructor(
     private router:Router
   ) { }
 
-  ngOnInit(): void {
-  }
 
   onSubmit(){
-    this.router.navigate(['offer/list'])
+    sessionStorage.setItem('username',this.input.value)
+    console.log(sessionStorage.getItem('username'))
+    //this.router.navigate(['offer/list'])
+
   }
 }

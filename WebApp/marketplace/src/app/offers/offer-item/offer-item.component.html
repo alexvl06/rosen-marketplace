@@ -1,6 +1,5 @@
 <div class="card card-body col-12 col-md-6 col-lg-4">
   <h3 class="title card-title bg-dark text-white">{{ offer.title }}</h3>
-  <div class="category">{{ offer.category }}</div>
   <div class="picture">
     <img [src]="offer.imgURL" alt="offer-image" />
   </div>
@@ -10,7 +9,7 @@
   </div>
   <p class="description card-text">{{ offer.description }}</p>
   <div class="">
-    <label>I'm looking for</label>
+    <label>{{offer.category}}</label>
   </div>
 
 </div>

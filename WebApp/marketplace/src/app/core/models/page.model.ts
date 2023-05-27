@@ -16,7 +16,7 @@ export class Page<T> {
       return this.pageIndex
     }
 
-    get nextPageIndex(){
+    get nextIndex(){
       if(this.pageIndex+1 >this.pageCount){
         return null
       }
@@ -28,7 +28,7 @@ export class Page<T> {
     }
 
     get previousIndex(){
-      if(this.pageIndex<1){
+      if(this.pageIndex-1<1){
         return null
       }
       return this.pageIndex-1;

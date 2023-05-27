@@ -16,7 +16,7 @@ export class MarketplaceApiService {
     date: new Date(),
     description:'Tamaño Grande Fácil Limpiezqa Comfort. Elegancia. Estilo Novedoso.',
     location: 'New York',
-    category:'Mueble'
+    category:"I'm looking for"
   },
   {
     title: 'Sofacama Amoblando George Con Brazos Café',
@@ -25,7 +25,7 @@ export class MarketplaceApiService {
     date: new Date(),
     description:'Medida sentado (Ancho 180cm) (Largo 100cm) (Alto 80cm) (apróx). Medida acostado: (Ancho 180cm) (Largo 1|0cm) (Alto 40cm) (apróx). Sofacama de tres posiciones en su espaldar. Entrega a convenir',
     location: 'New York',
-    category:'Mueble'
+    category:'Product'
   },
   {
     title: 'Computador Apple II vintage',
@@ -34,7 +34,7 @@ export class MarketplaceApiService {
     date: new Date(),
     description:'Bla bla bla ...',
     location: 'New York',
-    category:'electrónica'
+    category:'Product'
   },
   {
     title: 'Carpooling',
@@ -43,7 +43,7 @@ export class MarketplaceApiService {
     date: new Date(),
     description:'Bla bla bla ...',
     location: 'New York',
-    category:'Transporte'
+    category:'Service'
   },
   {
     title: 'Iphone Galaxy A02',
@@ -52,7 +52,7 @@ export class MarketplaceApiService {
     date: new Date(),
     description:'Bla bla bla ...',
     location: 'New York',
-    category:'Electrónica'
+    category:'Product'
   },
   {
     title: 'Linterna de bolsillo',
@@ -61,7 +61,7 @@ export class MarketplaceApiService {
     date: new Date(),
     description:'Bla bla bla ...',
     location: 'New York',
-    category:'Electrónica'
+    category:'Product'
   },
   {
     title: 'Casa veraniega',
@@ -70,69 +70,7 @@ export class MarketplaceApiService {
     date: new Date(),
     description:'Bla bla bla ...',
     location: 'New York',
-    category:'Inmueble'
-  },{
-    title: 'Puff Pera Lona Impermeable Naranja',
-    imgURL:'../../../assets/puff.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Tamaño Grande Fácil Limpiezqa Comfort. Elegancia. Estilo Novedoso.',
-    location: 'New York',
-    category:'Mueble'
-  },
-  {
-    title: 'Sofacama Amoblando George Con Brazos Café',
-    imgURL:'../../../assets/sofa.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Medida sentado (Ancho 180cm) (Largo 100cm) (Alto 80cm) (apróx). Medida acostado: (Ancho 180cm) (Largo 1|0cm) (Alto 40cm) (apróx). Sofacama de tres posiciones en su espaldar. Entrega a convenir',
-    location: 'New York',
-    category:'Mueble'
-  },
-  {
-    title: 'Computador Apple II vintage',
-    imgURL:'../../../assets/apple2.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Bla bla bla ...',
-    location: 'New York',
-    category:'electrónica'
-  },
-  {
-    title: 'Carpooling',
-    imgURL:'../../../assets/carpooling.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Bla bla bla ...',
-    location: 'New York',
-    category:'Transporte'
-  },
-  {
-    title: 'Iphone Galaxy A02',
-    imgURL:'../../../assets/iphone.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Bla bla bla ...',
-    location: 'New York',
-    category:'Electrónica'
-  },
-  {
-    title: 'Linterna de bolsillo',
-    imgURL:'../../../assets/lantern.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Bla bla bla ...',
-    location: 'New York',
-    category:'Electrónica'
-  },
-  {
-    title: 'Casa veraniega',
-    imgURL:'../../../assets/summer-house.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Bla bla bla ...',
-    location: 'New York',
-    category:'Inmueble'
+    category:'Service'
   }
 ]
 

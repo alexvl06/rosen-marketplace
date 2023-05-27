@@ -25,7 +25,7 @@ export class PaginationComponent implements OnInit {
   }
 
   nextIndex(){
-    if(this.page.nextPageIndex){
+    if(this.page.nextIndex){
       this.index++
       this.page.PageIndex = this.index
       this.pageIndex.next(this.index)

@@ -1,26 +1,56 @@
-<form class="offer-form">
-  <h3>Post new Offer</h3>
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input id="title" class="" placeholder="Title"/>
+<form class="offer-form container form-floating mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-4 card p-4">
+      <h3>Post new Offer</h3>
+      <div class="form-group mt-2">
+        <label for="titlel" class="form-label fw-bold">Title</label>
+        <input id="title" class="form-control" placeholder="Title" />
+      </div>
+      <div class="form-group mt-2">
+        <label for="picture-url" class="form-label fw-bold">Picture URL</label>
+        <input
+          class="form-control"
+          id="picture-url"
+          placeholder="offers/iphone.jpg"
+        />
+      </div>
+      <div class="form-group mt-2 d-flex flex-column">
+        <label for="description" class="form-label fw-bold">Description</label>
+        <textarea
+          class="form-control"
+          id="description"
+          class=""
+          placeholder="Description"
+          rows="5"
+        ></textarea>
+      </div>
+      <div class="form-group mt-2">
+        <label for="location" class="form-label fw-bold m-2">Location</label>
+        <input
+          class="form-control"
+          id="location"
+          class=""
+          placeholder="Country, city, neighborhood, the office, my desk, etc..."
+        />
+      </div>
+      <div class="form-group mt-2">
+        <label for="category" class="form-label fw-bold m-2">Category</label>
+        <select class="form-select" id="category" class="">
+          <option [value]="item" *ngFor="let item of categories">
+            {{ item }}
+          </option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <button
+            type="submit"
+            class="offer-submit-button btn btn-primary mt-4"
+          >
+            Create
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <label for="picture-url">Picture URL</label>
-    <input id="picture-url" placeholder="offers/iphone.jpg"/>
-  </div>
-  <div class="form-group">
-    <label for="description">Description</label>
-    <textarea id="description" class="" placeholder="Description" rows="5"></textarea>
-  </div>
-  <div class="form-group">
-    <label for="location">Location</label>
-    <input id="location" class="" placeholder="Country, city, neighborhood, the office, my desk, etc..."/>
-  </div>
-  <div class="form-group">
-    <label for="category">Category</label>
-    <select id="category" class="">
-      <option [value]="item" *ngFor="let item of categories">{{item}}</option>
-    </select>
-  </div>
-  <button type="submit" class="offer-submit-button">Create</button>
 </form>

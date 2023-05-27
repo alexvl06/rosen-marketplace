@@ -9,7 +9,7 @@ import { OfferModel } from 'src/app/core/marketplace-api/models/offer.model';
 })
 export class OfferListComponent implements OnInit {
 
-  pageSize:number = 1;
+  pageSize:number = 4;
   totalPages:number = 0;
   offers: OfferModel[]
 

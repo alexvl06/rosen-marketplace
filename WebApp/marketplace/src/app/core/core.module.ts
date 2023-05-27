@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { AppRoutingModule } from '../app-routing.module';
+import { OfferRoutingModule } from '../offers/offer-routing.module';
 
 
 
@@ -11,10 +11,10 @@ import { AppRoutingModule } from '../app-routing.module';
   ],
   imports: [
     CommonModule,
-    AppRoutingModule
+    OfferRoutingModule
   ],
   exports:[
-    NavbarComponent
+    NavbarComponent,
   ]
 })
 export class CoreModule { }
