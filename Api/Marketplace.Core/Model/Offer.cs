@@ -94,5 +94,9 @@ public class Offer
     /// </value>
     public string Username { get; set; }
 
+
+    public int UserId {get; set;}
+    public int CategoryId {get; set;}
+
     #endregion
 }

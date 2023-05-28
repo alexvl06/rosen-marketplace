@@ -60,12 +60,18 @@ namespace Marketplace.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+            .AddJsonOptions(options=>
+            {
+                options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+            });
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Marketplace.Api", Version = "v1" }); });
 
             services.AddScoped<IUserBl, UserBl>();
             services.AddScoped<IOfferBl, OfferBl>();
+            services.AddScoped<ICategoryBl, CategoryBl>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IOfferRepository, OfferRepository>();
         }
 

@@ -20,7 +20,7 @@ public class Category
     /// <value>
     ///     The identifier.
     /// </value>
-    public byte Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     ///     Gets or sets the name.

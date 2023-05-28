@@ -14,6 +14,12 @@ namespace Marketplace.Bl
         public OfferBl(IOfferRepository offerRepository){
             this.offerRepository = offerRepository;
         }
+
+        public Task<bool> CreateOffer(Offer offer)
+        {
+            return offerRepository.CreateOffer(offer);
+        }
+
         public async Task<IEnumerable<Offer>> GetOffersAsync(int pageNumber, int pageSize)
         {
             return await offerRepository.GetOffersByPageIndex(pageNumber, pageSize).ConfigureAwait(false);
