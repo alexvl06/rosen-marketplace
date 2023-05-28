@@ -9,8 +9,8 @@ import { OfferModel } from 'src/app/core/marketplace-api/models/offer.model';
 })
 export class OfferListComponent implements OnInit {
 
-  pageSize:number = 4;
-  totalPages:number = 0;
+  pageSize:number = 6;
+  totalPages:number;
   offers: OfferModel[]
 
   constructor(
@@ -22,7 +22,6 @@ export class OfferListComponent implements OnInit {
     this.marketplaceService.getOffers(1, this.pageSize).subscribe(offers=>{
       this.offers = offers
       this.totalPages = this.marketplaceService.totalPages;
-      console.log(offers)
     }
     )
   }

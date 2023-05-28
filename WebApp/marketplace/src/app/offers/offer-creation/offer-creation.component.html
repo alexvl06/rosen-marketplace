@@ -9,18 +9,18 @@
       <div class="form-group mt-2">
         <label for="picture-url" class="form-label fw-bold">Picture URL</label>
         <input
-          formControlName="imgURL"
+          formControlName="pictureUrl"
           class="form-control"
           id="picture-url"
           placeholder="offers/iphone.jpg"
         />
       </div>
-      <div class="form-group mt-2 d-flex flex-column">
+      <div class="form-group mt-2 d-flex flex-column ">
         <label for="description" class="form-label fw-bold">Description</label>
         <textarea formControlName="description"
           class="form-control"
           id="description"
-          class=""
+          class="p-2"
           placeholder="Description"
           rows="5"
         ></textarea>
@@ -30,14 +30,14 @@
         <input
           class="form-control"
           id="location"
-          class=""
+          class="p-1"
           formControlName="location"
           placeholder="Country, city, neighborhood, the office, my desk, etc..."
         />
       </div>
       <div class="form-group mt-2">
         <label for="category" class="form-label fw-bold m-2">Category</label>
-        <select formControlName="category" class="form-select" id="category" class="">
+        <select formControlName="categoryName" class="form-select p-1" id="category" class="">
           <option [value]="item" *ngFor="let item of categories">
             {{ item }}
           </option>

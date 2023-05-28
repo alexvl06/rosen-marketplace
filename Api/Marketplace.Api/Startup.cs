@@ -45,28 +45,57 @@ namespace Marketplace.Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Marketplace.Api v1"));
+                app.UseSwaggerUI(
+                    c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Marketplace.Api v1")
+                );
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("MyOrigins");
 
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers()
-            .AddJsonOptions(options=>
+            services
+                .AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = System
+                        .Text
+                        .Json
+                        .Serialization
+                        .JsonIgnoreCondition
+                        .WhenWritingNull;
+                });
+            services.AddSwaggerGen(c =>
             {
-                options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Marketplace.Api", Version = "v1" });
             });
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Marketplace.Api", Version = "v1" }); });
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    name: "MyOrigins",
+                    policy =>
+                    {
+                        policy
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithExposedHeaders("total-offers");
+                    }
+                );
+            });
+            
             services.AddScoped<IUserBl, UserBl>();
             services.AddScoped<IOfferBl, OfferBl>();
             services.AddScoped<ICategoryBl, CategoryBl>();

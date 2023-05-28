@@ -22,5 +22,10 @@ namespace Marketplace.Dal.Repositories
         {
             return await _context.GetOffersByPageIndex(pageIndex,pageSize);
         }
+
+        public async Task<int> OffersQuantity()
+        {
+            return await _context.OffersQuantity();
+        }
     }
 }

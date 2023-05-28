@@ -8,5 +8,6 @@ namespace Marketplace.Core.Dal
     {
         Task<IEnumerable<Offer>> GetOffersByPageIndex(int pageIndex, int pageSize);
         Task<bool> CreateOffer(Offer offer);
+        Task<int> OffersQuantity();
     }
 }

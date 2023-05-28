@@ -1,12 +1,11 @@
 export interface OfferModel {
   title:string
-  imgURL:string
-  date?: Date
+  pictureUrl:string
+  publishedOn?: Date
   location:string
-  category:Category
+  categoryName:string
   username?:string
   description:string
 }
 
-export type Category = "I'm looking for"|"Product"|"Service"
 

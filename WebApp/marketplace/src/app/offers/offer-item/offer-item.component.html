@@ -1,15 +1,15 @@
 <div class="card card-body col-12 col-md-6 col-lg-4">
   <h3 class="title card-title bg-dark text-white">{{ offer.title }}</h3>
   <div class="picture">
-    <img [src]="offer.imgURL" alt="offer-image" />
+    <img [src]="offer.pictureUrl|concatBeforeIfNotURLOnline" alt="offer-image" />
   </div>
   <div class="byline">
     <span class="user">{{ offer.username }}</span>
-    <span class="published-on">{{ offer.date| date:'short' }}</span>
+    <span class="published-on">{{ offer.publishedOn| date:'yyyy/MM/dd' }}</span>
   </div>
   <p class="description card-text">{{ offer.description }}</p>
   <div class="">
-    <label>{{offer.category}}</label>
+    <label>{{offer.categoryName}}</label>
   </div>
 
 </div>

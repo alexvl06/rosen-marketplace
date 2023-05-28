@@ -1,26 +1,26 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, UntypedFormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { MarketplaceApiService } from 'src/app/core/marketplace-api/marketplace-api.service';
-import { Category, OfferModel } from 'src/app/core/marketplace-api/models/offer.model';
+import {  OfferModel } from 'src/app/core/marketplace-api/models/offer.model';
 
 @Component({
   selector: 'app-offer-creation',
   templateUrl: './offer-creation.component.html',
   styleUrls: ['./offer-creation.component.scss']
 })
-export class OfferCreationComponent{
+export class OfferCreationComponent implements OnInit{
 
   offerForm: FormGroup = this.formBuilder.group<OfferModel>({
     title: '',
-    imgURL:'',
+    pictureUrl:'',
     description:'',
     location:'',
-    category: "I'm looking for"
+    categoryName: "I'm looking for"
   });
 
   @Input()
-  categories: string[] = ["I'm looking for", "Product", "Service"];
+  categories: string[] = []
 
 
   constructor(
@@ -30,16 +30,21 @@ export class OfferCreationComponent{
   ) {
 
   }
+  ngOnInit(): void {
+    this.marketplaceService.getCategories().subscribe(categories=>{
+      this.categories = categories.map(category=>category.name)
+    })
+  }
 
   offerSubmit() {
     const formValues:OfferModel = this.offerForm.getRawValue()
+    formValues.username = sessionStorage.getItem('username')
     this.marketplaceService.postOffer(formValues).subscribe({
       next: ()=> {
-        formValues.date = new Date()
-        formValues.username = sessionStorage.getItem('username')
         this.router.navigate(['/offer/list'])
-      }
-      //
+      },
+      error:(e)=>console.error(`Error trying to create new offer: ${e}`)
+
     })
   }
 }

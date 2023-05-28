@@ -24,5 +24,10 @@ namespace Marketplace.Bl
         {
             return await offerRepository.GetOffersByPageIndex(pageNumber, pageSize).ConfigureAwait(false);
         }
+
+        public async Task<int> OffersQuantity()
+        {
+           return await offerRepository.OffersQuantity();
+        }
     }
 }

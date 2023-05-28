@@ -8,5 +8,6 @@ namespace Marketplace.Core.Bl
     {
         Task<IEnumerable<Offer>> GetOffersAsync(int pageNumber, int pageSize);
         Task<bool> CreateOffer(Offer offer);
+        Task<int> OffersQuantity();
     }
 }

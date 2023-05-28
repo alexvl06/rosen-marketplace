@@ -8,6 +8,7 @@ import { CoreModule } from "../core/core.module";
 import { PaginationComponent } from './offer-list/pagination/pagination.component';
 import { OffersComponent } from './offers.component';
 import { OfferRoutingModule } from "./offer-routing.module";
+import { ImgURLCustomizerPipe } from "../pipes/img-urlcustomizer.pipe";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { OfferRoutingModule } from "./offer-routing.module";
     OfferCreationComponent,
     OfferListComponent,
     PaginationComponent,
-    OffersComponent
+    OffersComponent,
+    ImgURLCustomizerPipe
   ],
   imports: [CommonModule, ReactiveFormsModule, CoreModule,
     OfferRoutingModule],

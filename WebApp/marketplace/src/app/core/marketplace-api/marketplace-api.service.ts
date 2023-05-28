@@ -1,92 +1,44 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {OfferModel} from './models/offer.model';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import {map} from 'rxjs/operators'
+import { CategoryModel } from './models/category.model ';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MarketplaceApiService {
 
-  private readonly marketplaceApUrl = '';
-  totalPages:number = 0;
-  offers:OfferModel[] = [{
-    title: 'Puff Pera Lona Impermeable Naranja',
-    imgURL:'../../../assets/puff.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Tamaño Grande Fácil Limpiezqa Comfort. Elegancia. Estilo Novedoso.',
-    location: 'New York',
-    category:"I'm looking for"
-  },
-  {
-    title: 'Sofacama Amoblando George Con Brazos Café',
-    imgURL:'../../../assets/sofa.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Medida sentado (Ancho 180cm) (Largo 100cm) (Alto 80cm) (apróx). Medida acostado: (Ancho 180cm) (Largo 1|0cm) (Alto 40cm) (apróx). Sofacama de tres posiciones en su espaldar. Entrega a convenir',
-    location: 'New York',
-    category:'Product'
-  },
-  {
-    title: 'Computador Apple II vintage',
-    imgURL:'../../../assets/apple2.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Bla bla bla ...',
-    location: 'New York',
-    category:'Product'
-  },
-  {
-    title: 'Carpooling',
-    imgURL:'../../../assets/carpooling.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Bla bla bla ...',
-    location: 'New York',
-    category:'Service'
-  },
-  {
-    title: 'Iphone Galaxy A02',
-    imgURL:'../../../assets/iphone.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Bla bla bla ...',
-    location: 'New York',
-    category:'Product'
-  },
-  {
-    title: 'Linterna de bolsillo',
-    imgURL:'../../../assets/lantern.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Bla bla bla ...',
-    location: 'New York',
-    category:'Product'
-  },
-  {
-    title: 'Casa veraniega',
-    imgURL:'../../../assets/summer-house.jpg',
-    username:'JCUrquijo',
-    date: new Date(),
-    description:'Bla bla bla ...',
-    location: 'New York',
-    category:'Service'
-  }
-]
+    totalPages:number = 0
 
-  constructor() { }
+  constructor(
+    private http:HttpClient
+  ) { }
 
   getOffers(page: number, pageSize: number): Observable<OfferModel[]> {
-    this.totalPages = Math.ceil(this.offers.length/pageSize);
-    return of(this.offers.slice((page-1)*pageSize,(page)*pageSize));
+    const params = new HttpParams()
+    .set('index', page )
+    .set('size',pageSize)
+    return this.http.get<OfferModel[]>(`${environment.URL}/Offer`, {
+      observe:'response',
+      params:params
+    })
+    .pipe(
+      map((response:HttpResponse<OfferModel[]>)=>{
+        const headers = response.headers;
+        this.totalPages = Math.ceil((headers.get('total-offers') as unknown as  number)/pageSize);
+        return response.body;
+      })
+    )
   }
 
   postOffer(offer:OfferModel) {
-    return of(this.offers.push(offer));
+    return this.http.post<boolean>(`${environment.URL}/Offer`,offer);
   }
 
-  getCategories(): Observable<string[]> {
-    // TODO: implement the logic to retrieve the categories from the service
-    return of([]);
+  getCategories(): Observable<CategoryModel[]> {
+    return this.http.get<CategoryModel[]>(`${environment.URL}/Category`);
   }
 }

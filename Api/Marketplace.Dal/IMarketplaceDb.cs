@@ -17,4 +17,5 @@ public interface IMarketplaceDb
     Task<Offer[]> GetOffersByPageIndex(int pageIndex, int pageSize);
     Task<Category[]> GetAllCategories();
     Task<bool> CreateNewOffer(Offer offer);
+    Task<int> OffersQuantity();
 }

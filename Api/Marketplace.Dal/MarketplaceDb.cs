@@ -42,7 +42,6 @@ namespace Marketplace.Dal
             );
             try
             {
-
                 command.ExecuteNonQuery();
                 command.Dispose();
                 _connection.Close();
@@ -98,7 +97,7 @@ namespace Marketplace.Dal
         public async Task<Offer[]> GetOffersByPageIndex(int pageIndex, int pageSize)
         {
             await using var command = new SqliteCommand(
-                $"SELECT O.Description, O.Location, O.PictureUrl, O.PublishedOn, O.Title, U.Username, O.UserId, O.CategoryId, C.Name as CategoryName FROM Offer O LEFT JOIN User U ON U.Id = O.UserId LEFT JOIN Category C ON O.CategoryId = C.Id ORDER BY O.PublishedOn DESC LIMIT {pageSize} OFFSET {(pageIndex - 1) * pageSize};",
+                $"SELECT O.Description, O.Location, O.PictureUrl, O.PublishedOn, O.Title, U.Username, O.UserId, O.CategoryId, C.Name as CategoryName FROM Offer O LEFT JOIN User U ON U.Id = O.UserId LEFT JOIN Category C ON O.CategoryId = C.Id WHERE date(O.PublishedOn) <= date('now') ORDER BY date(O.PublishedOn) DESC LIMIT {pageSize} OFFSET {(pageIndex - 1) * pageSize};",
                 _connection
             );
 
@@ -174,6 +173,36 @@ namespace Marketplace.Dal
             }
         }
 
+        public async Task<int> OffersQuantity()
+        {
+            _connection.Open();
+            await using var command = new SqliteCommand(
+                "SELECT count(*) offerCount FROM Offer;",
+                _connection
+            );
+            try
+            {
+                await using var reader = await command.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    var response = reader.GetInt32(reader.GetOrdinal("offerCount"));
+                    command.Dispose();
+                    _connection.Close();
+                    return response;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                command.Dispose();
+                _connection.Close();
+                throw;
+            }
+            command.Dispose();
+            _connection.Close();
+            return 0;
+        }
+
         private async Task<int> GetCategoryId(string name)
         {
             await using var command = new SqliteCommand(
@@ -182,12 +211,10 @@ namespace Marketplace.Dal
             );
             try
             {
-
                 await using var reader = await command.ExecuteReaderAsync();
                 while (await reader.ReadAsync())
                 {
                     return reader.GetInt32(reader.GetOrdinal("Id"));
-
                 }
                 command.Dispose();
             }
@@ -211,7 +238,6 @@ namespace Marketplace.Dal
                 while (await reader.ReadAsync())
                 {
                     return reader.GetInt32(reader.GetOrdinal("Id"));
-                    
                 }
                 command.Dispose();
             }
@@ -251,12 +277,10 @@ namespace Marketplace.Dal
             );
             try
             {
-
                 await using var reader = await command.ExecuteReaderAsync();
                 while (await reader.ReadAsync())
                 {
                     return reader.GetInt32(reader.GetOrdinal("Id"));
-                    
                 }
                 command.Dispose();
             }

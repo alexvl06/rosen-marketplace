@@ -8,7 +8,7 @@ import { Page } from 'src/app/core/models/page.model';
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent implements OnInit {
-  @Input() totalPages:number = 0;
+  @Input() totalPages:number;
   @Output() pageIndex = new EventEmitter<number>();
   index = 1
   nextIndexes:number[] = [];

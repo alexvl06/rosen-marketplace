@@ -29,6 +29,7 @@ namespace Marketplace.Api.Controllers
         )
         {
             IEnumerable<Offer> result;
+            int totalOffers = 0;
             try
             {
                 result = await this.offerBl.GetOffersAsync(index, size).ConfigureAwait(false);
@@ -36,9 +37,18 @@ namespace Marketplace.Api.Controllers
             catch (Exception ex)
             {
                 this.logger?.LogError(ex, ex.Message);
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Server Error.");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Server Error trying to get offers.");
             }
-
+            try
+            {
+                totalOffers = await this.offerBl.OffersQuantity();
+            }
+            catch (Exception ex)
+            {
+                this.logger?.LogError(ex, ex.Message);
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Server Error trying to count offers.");
+            }
+            Response.Headers.Add("total-offers", totalOffers.ToString());
             return this.Ok(result);
         }
 
