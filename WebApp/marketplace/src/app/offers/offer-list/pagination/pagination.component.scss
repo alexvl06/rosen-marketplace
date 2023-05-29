@@ -1,1 +1,28 @@
+.btn{
+  border-radius: 0;
+}
 
+.last{
+  border-radius: 0 15% 15% 0;
+}
+
+.first{
+  border-radius: 15% 0px 0px 15%;
+}
+
+
+.fs{
+  font-size: 10pt;
+}
+
+.btn-primary{
+
+  --bs-btn-bg: #357ABA;
+  --bs-btn-border-color: #357ABA;
+}
+
+.btn-outline-primary{
+
+  --bs-btn-color: #357ABA;
+  --bs-btn-border-color: #357ABA;
+}

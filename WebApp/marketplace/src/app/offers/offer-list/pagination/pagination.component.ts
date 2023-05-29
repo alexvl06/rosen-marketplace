@@ -11,8 +11,6 @@ export class PaginationComponent implements OnInit {
   @Input() totalPages:number;
   @Output() pageIndex = new EventEmitter<number>();
   index = 1
-  nextIndexes:number[] = [];
-  previousIndexes:number[] = []
   page:Page<OffersModule>;
   ngOnInit(){
     this.page = new Page([],this.index,this.totalPages)
@@ -22,6 +20,7 @@ export class PaginationComponent implements OnInit {
     this.index = index;
     this.page.PageIndex = this.index
     this.pageIndex.next(index)
+
   }
 
   nextIndex(){
