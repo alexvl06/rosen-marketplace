@@ -1,0 +1,65 @@
+use("Marketplace");
+db.orderHistory.aggregate([
+    {
+      $match:
+        {
+            OrderDate: 
+            {
+                $regex: /^2023-01/
+            }
+        }
+    },
+    {
+      $unwind: "$Products"
+    },
+    {
+      $project:
+        {
+          _id: 0,
+          Qty: "$Products.Qty",
+          TotalPrice: "$Products.TotalPrice",
+          ProductId: "$Products.ProductId"
+        }
+    },
+    {
+      $group:
+        {
+          _id: "$ProductId",
+          TotalSoldItems: {
+            $sum: "$Qty"
+          },
+          TotalPrice: {
+            $sum: "$TotalPrice"
+          }
+        }
+    },
+    {
+      $lookup:
+        {
+          from: "product",
+          localField: "_id",
+          foreignField: "_id",
+          as: "product"
+        }
+    },
+    {
+      $unwind:"$product"
+    },
+    {
+      $project:
+        {
+          _id: 0,
+          TotalSoldItems: 1,
+          TotalPrice: 1,
+          ProductId: "$_id",
+          ProductName: "$product.Name"
+        }
+    },
+    {
+      $sort:
+        {TotalPrice: -1}
+    },
+    {
+      $limit:3
+    }
+  ]);
