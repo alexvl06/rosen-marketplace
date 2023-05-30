@@ -9,32 +9,63 @@
 using System.Threading.Tasks;
 using Marketplace.Core.Dal;
 using Marketplace.Core.Model;
-
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System;
 namespace Marketplace.Dal.Repositories;
 
 public class UserRepository : IUserRepository
 {
     #region Fields
 
-    private readonly MarketplaceDb _context;
+    private readonly MarketplaceContext _context;
 
     #endregion
 
     #region Constructors
 
-    public UserRepository()
+    public UserRepository(MarketplaceContext context)
     {
-        _context = new MarketplaceDb();
+        _context = context;
     }
 
     #endregion
 
     #region Methods
 
-    /// <inheritdoc />
-    public async Task<User[]> GetAllUsersAsync()
+
+    public async Task<int> CreateNewUser(string name)
     {
-        return await _context.GetUsersAsync();
+        User user = new User();
+        user.Username = name;
+        _context.users.Add(user);
+        await _context.SaveChangesAsync();
+        return _context.users.Max(u=>u.Id);
+    }
+
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<User>> GetAllUsersAsync()
+    {
+        return await _context.users.ToListAsync();
+    }
+
+    public async Task<int> GetUserIdByName(string username)
+    {
+            User user = await  _context.users.Where(u=>u.Username==username).FirstOrDefaultAsync();
+            if(user != null){
+                return user.Id;
+            }else{
+                return 0;
+            }
+    }
+
+    
+    public async Task<string> GetUserNameById(int id)
+    {
+        User user = await _context.users.Where(c=>c.Id == id).FirstOrDefaultAsync();
+        return user.Username;
     }
 
     #endregion

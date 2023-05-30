@@ -12,6 +12,7 @@ namespace Marketplace.Api
     using Marketplace.Core.Bl;
     using Marketplace.Core.Dal;
     using Marketplace.Dal.Repositories;
+    using Marketplace.Dal;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -77,6 +78,7 @@ namespace Marketplace.Api
                         .JsonIgnoreCondition
                         .WhenWritingNull;
                 });
+            services.AddDbContext<MarketplaceContext>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Marketplace.Api", Version = "v1" });

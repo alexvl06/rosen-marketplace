@@ -8,6 +8,7 @@
 
 using System.Threading.Tasks;
 using Marketplace.Core.Model;
+using System.Collections.Generic;
 
 namespace Marketplace.Core.Dal;
 
@@ -22,7 +23,10 @@ public interface IUserRepository
     ///     Gets all users asynchronous.
     /// </summary>
     /// <returns>Array of users</returns>
-    Task<User[]> GetAllUsersAsync();
+    Task<IEnumerable<User>> GetAllUsersAsync();
+    Task<int> GetUserIdByName(string username);
+    Task<string> GetUserNameById(int id);
+    Task<int> CreateNewUser(string name);
 
     #endregion
 }

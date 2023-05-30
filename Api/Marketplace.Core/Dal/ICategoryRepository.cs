@@ -7,5 +7,7 @@ namespace Marketplace.Core.Dal
     public interface ICategoryRepository
     {
         Task<IEnumerable<Category>> GetAllCategories();
+        Task<int> GetCategoryIdByName(string name);
+        Task<string> GetCategoryNameById(int id);
     }
 }
