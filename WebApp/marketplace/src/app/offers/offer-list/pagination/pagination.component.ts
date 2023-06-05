@@ -8,10 +8,11 @@ import { Page } from 'src/app/core/models/page.model';
   styleUrls: ['./pagination.component.scss']
 })
 export class PaginationComponent implements OnInit {
-  @Input() totalPages:number;
+  @Input() totalPages!:number;
   @Output() pageIndex = new EventEmitter<number>();
   index = 1
-  page:Page<OffersModule>;
+  page!:Page<OffersModule>;
+
   ngOnInit(){
     this.page = new Page([],this.index,this.totalPages)
   }

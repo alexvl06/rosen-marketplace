@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class NavbarComponent implements OnInit{
   username:string = '';
   ngOnInit(): void {
-      this.username = sessionStorage.getItem('username')
+      this.username = sessionStorage.getItem('username')!
   }
 
 }

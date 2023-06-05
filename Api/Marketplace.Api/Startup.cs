@@ -19,7 +19,7 @@ namespace Marketplace.Api
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
-
+    using  System.Text.Json.Serialization;
     public class Startup
     {
         #region Properties
@@ -77,6 +77,7 @@ namespace Marketplace.Api
                         .Serialization
                         .JsonIgnoreCondition
                         .WhenWritingNull;
+                    options.JsonSerializerOptions.ReferenceHandler =ReferenceHandler.IgnoreCycles;
                 });
             services.AddDbContext<MarketplaceContext>();
             services.AddSwaggerGen(c =>

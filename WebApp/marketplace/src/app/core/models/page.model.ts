@@ -38,7 +38,7 @@ export class Page<T> {
       this.pageIndex = index
     }
 
-    getNextPageIndexes():number[]{
+    getNextPageIndexes():number[]|null{
       let start = this.pageIndex+1;
       let end = this.pageIndex+3;
       if(start>this.pageCount){
@@ -52,7 +52,7 @@ export class Page<T> {
       return this.createNumberArray(start,end)
     }
 
-    getPreviousPageIndexes():number[]{
+    getPreviousPageIndexes():number[]|null{
       let end = this.pageIndex-1;
       let start = this.pageIndex-3;
       if(end<1){

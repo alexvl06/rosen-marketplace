@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System;
 
 namespace Marketplace.Dal.Repositories
 {
@@ -12,6 +13,7 @@ namespace Marketplace.Dal.Repositories
         private readonly MarketplaceContext _context;
         private readonly IUserRepository userRepository;
         private readonly ICategoryRepository categoryRepository;
+
         public OfferRepository(MarketplaceContext context, ICategoryRepository categoryRepository, IUserRepository userRepository)
         {
             this.categoryRepository = categoryRepository;
@@ -19,43 +21,84 @@ namespace Marketplace.Dal.Repositories
             _context = context;
         }
 
-        public async Task<bool> CreateOffer(Offer offer)
+        public async Task<OfferDTO> CreateOffer(OfferDTO offerDTO)
         {
-            bool state = false;
-            int categoryId = await categoryRepository.GetCategoryIdByName(offer.CategoryName);
-            int userId = await userRepository.GetUserIdByName(offer.Username);
-            if(userId ==0){
-                userId = await userRepository.CreateNewUser(offer.Username);
+            int categoryId = await categoryRepository.GetCategoryIdByName(offerDTO.CategoryName);
+            int userId = await userRepository.GetUserIdByName(offerDTO.Username);
+            if (userId == 0)
+            {
+                userId = await userRepository.CreateNewUser(offerDTO.Username);
             }
-            offer.CategoryId = categoryId;
-            offer.UserId = userId;
-            _context.offers.Add(offer);
+
+            _context.offers.Add(DTOToEntityMapper(offerDTO, categoryId, userId));
             await _context.SaveChangesAsync();
-            state = true;
-            return state;
+            return offerDTO;
         }
 
-        public async Task<IEnumerable<Offer>> GetOffersByPageIndex(int pageIndex, int pageSize)
+        public async Task<OfferDTO> GetOfferById(Guid id)
         {
-            IEnumerable<Offer> offers = await _context.offers.OrderByDescending(o=>o.UserId).Skip((pageIndex-1)*pageSize).Take(pageSize)
-            .ToListAsync();
+            return EntityToDTOMapper(
+                await _context.offers
+                    .Include(o => o.User)
+                    .Include(o => o.Category)
+                    .FirstOrDefaultAsync(o => o.Id == id)
+            );
+        }
 
-            foreach(Offer offer in offers){
-                string categoryName = await categoryRepository.GetCategoryNameById(offer.CategoryId);
-                string username = await userRepository.GetUserNameById(offer.UserId);
-                if(categoryName!=null){
-                    offer.CategoryName = categoryName;
-                }
-                if(username!=null){
-                    offer.Username = username;
-                }
+        public async Task<IEnumerable<OfferDTO>> GetOffersByPageIndex(int pageIndex, int pageSize)
+        {
+            IEnumerable<Offer> offers = await _context.offers
+                .Include(o => o.Category)
+                .Include(o => o.User)
+                .OrderByDescending(o => o.UserId)
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            List<OfferDTO> offersDTO = new List<OfferDTO>();
+            foreach (Offer offer in offers)
+            {
+                offersDTO.Add(EntityToDTOMapper(offer));
             }
-            return offers;
+            return offersDTO;
         }
 
         public async Task<int> OffersQuantity()
         {
             return await _context.offers.CountAsync();
+        }
+
+        private OfferDTO EntityToDTOMapper(Offer offer)
+        {
+            OfferDTO offerDTO = new OfferDTO();
+            offerDTO.Description = offer.Description;
+            offerDTO.Location = offer.Location;
+            offerDTO.PictureUrl = offer.PictureUrl;
+            offerDTO.PublishedOn = offer.PublishedOn;
+            offerDTO.Title = offer.Title;
+            if (offer.User != null)
+            {
+                offerDTO.Username = offer.User.Username;
+            }
+
+            if (offer.Category != null)
+            {
+                offerDTO.CategoryName = offer.Category.Name;
+            }
+            return offerDTO;
+        }
+
+        private Offer DTOToEntityMapper(OfferDTO offerDTO, int categoryId, int userId)
+        {
+            Offer offer = new Offer();
+            offer.CategoryId = categoryId;
+            offer.UserId = userId;
+            offer.Description = offerDTO.Description;
+            offer.Location = offerDTO.Location;
+            offer.PictureUrl = offerDTO.PictureUrl;
+            offer.PublishedOn = offerDTO.PublishedOn;
+            offer.Title = offerDTO.Title;
+            return offer;
         }
     }
 }

@@ -9,7 +9,7 @@ import {OfferModel} from '../../core/marketplace-api/models/offer.model';
 export class OfferItemComponent{
 
   @Input()
-  offer: OfferModel;
+  offer!: OfferModel;
 
   constructor() { }
 

@@ -7,15 +7,16 @@ namespace Marketplace.Dal
 {
     public class MarketplaceContext: DbContext
     {
-        public DbSet<Offer> offers {get; set;}
-        public DbSet<Category> categories {get; set;}
-        public DbSet<User> users {get; set;}
+        public virtual DbSet<Offer> offers {get; set;}
+        public virtual DbSet<Category> categories {get; set;}
+        public virtual DbSet<User> users {get; set;}
 
+        public MarketplaceContext(){}
         public MarketplaceContext(DbContextOptions<MarketplaceContext> options):base(options){}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @".."));
+            string path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @".."));
             optionsBuilder.UseSqlite( $@"Data Source={path}\Marketplace.Dal\marketplace.db");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,15 +25,13 @@ namespace Marketplace.Dal
                 offer=>{
                     offer.ToTable("Offer");
                     offer.HasKey(o=>o.Id);
+                    offer.HasOne(o=>o.Category).WithMany(c=>c.Offers).HasForeignKey(o=>o.CategoryId);
+                    offer.HasOne(o=>o.User).WithMany(u=>u.Offers).HasForeignKey(o=>o.UserId);
                     offer.Property(o=>o.Description).IsRequired().HasMaxLength(200);
                     offer.Property(o=>o.Location).IsRequired().HasMaxLength(100);
                     offer.Property(o=>o.PictureUrl).IsRequired().HasMaxLength(150);
                     offer.Property(o=>o.PublishedOn).IsRequired().HasDefaultValue(DateTime.Now);
                     offer.Property(o=>o.Title).IsRequired().HasMaxLength(50);
-                    offer.Ignore(o=>o.CategoryName);
-                    offer.Ignore(o=>o.Username);
-                    offer.Ignore(o=>o.Category);
-                    offer.Ignore(o=>o.User);
                 }
             );
 

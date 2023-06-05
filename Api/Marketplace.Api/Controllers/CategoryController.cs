@@ -10,7 +10,7 @@ using System;
 namespace Marketplace.Api.Controllers
 {
     [ApiController]
-    [Route("[Controller]")]
+    [Route("api/v1/[Controller]")]
     public class CategoryController: ControllerBase
     {
         private readonly ILogger<CategoryController> logger;
@@ -33,7 +33,16 @@ namespace Marketplace.Api.Controllers
                 this.logger?.LogError(ex, ex.Message);
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Server Error.");
             }
-            return this.Ok(result);
+
+            if(result != null)
+            {
+                return this.Ok(result);
+            }
+            else
+            {
+                return NoContent();
+            }
+
         }
     }
 }

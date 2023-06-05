@@ -31,14 +31,16 @@ export class OfferCreationComponent implements OnInit{
 
   }
   ngOnInit(): void {
-    this.marketplaceService.getCategories().subscribe(categories=>{
-      this.categories = categories.map(category=>category.name)
+    this.marketplaceService.getCategories().subscribe({
+      next: categories=>{
+      this.categories = categories.map(category=>category.name)},
+      error: (e)=> console.error(`Error trying to get categories: ${e}`)
     })
   }
 
   offerSubmit() {
     const formValues:OfferModel = this.offerForm.getRawValue()
-    formValues.username = sessionStorage.getItem('username')
+    formValues.username = sessionStorage.getItem('username')!
     this.marketplaceService.postOffer(formValues).subscribe({
       next: ()=> {
         this.router.navigate(['/offer/list'])

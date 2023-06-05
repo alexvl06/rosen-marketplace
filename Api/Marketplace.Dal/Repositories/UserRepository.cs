@@ -53,7 +53,7 @@ public class UserRepository : IUserRepository
 
     public async Task<int> GetUserIdByName(string username)
     {
-            User user = await  _context.users.Where(u=>u.Username==username).FirstOrDefaultAsync();
+            User user = await  _context.users.FirstOrDefaultAsync(u=>u.Username==username);
             if(user != null){
                 return user.Id;
             }else{
@@ -64,7 +64,7 @@ public class UserRepository : IUserRepository
     
     public async Task<string> GetUserNameById(int id)
     {
-        User user = await _context.users.Where(c=>c.Id == id).FirstOrDefaultAsync();
+        User user = await _context.users.FirstOrDefaultAsync(c=>c.Id == id);
         return user.Username;
     }
 

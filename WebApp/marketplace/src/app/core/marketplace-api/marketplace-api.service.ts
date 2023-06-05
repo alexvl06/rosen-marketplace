@@ -17,7 +17,7 @@ export class MarketplaceApiService {
     private http:HttpClient
   ) { }
 
-  getOffers(page: number, pageSize: number): Observable<OfferModel[]> {
+  getOffers(page: number, pageSize: number): Observable<OfferModel[]|null> {
     const params = new HttpParams()
     .set('index', page )
     .set('size',pageSize)

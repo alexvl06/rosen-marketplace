@@ -21,7 +21,7 @@ namespace Marketplace.Dal.Repositories
 
         public async Task<int> GetCategoryIdByName(string name)
         {
-            Category category = await _context.categories.Where(c=>c.Name == name).FirstOrDefaultAsync();
+            Category category = await _context.categories.FirstOrDefaultAsync(c=>c.Name == name);
             if(category != null){
                 return category.Id;
             } else{
@@ -31,7 +31,7 @@ namespace Marketplace.Dal.Repositories
 
         public async Task<string> GetCategoryNameById(int id)
         {
-            Category category = await _context.categories.Where(c=>c.Id == id).FirstOrDefaultAsync();
+            Category category = await _context.categories.FirstOrDefaultAsync(c=>c.Id == id);
             return category.Name;
         }
     }

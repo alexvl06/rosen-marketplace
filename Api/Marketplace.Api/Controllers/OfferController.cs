@@ -10,7 +10,7 @@ using System;
 namespace Marketplace.Api.Controllers
 {
     [ApiController]
-    [Route("[Controller]")]
+    [Route("api/v1/[Controller]")]
     public class OfferController : ControllerBase
     {
         private readonly ILogger<OfferController> logger;
@@ -23,12 +23,12 @@ namespace Marketplace.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Offer>>> Get(
+        public async Task<ActionResult<IEnumerable<OfferDTO>>> Get(
             [FromQuery] int index,
             [FromQuery] int size
         )
         {
-            IEnumerable<Offer> result;
+            IEnumerable<OfferDTO> result;
             int totalOffers = 0;
             try
             {
@@ -49,15 +49,19 @@ namespace Marketplace.Api.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Server Error trying to count offers.");
             }
             Response.Headers.Add("total-offers", totalOffers.ToString());
-            return this.Ok(result);
+            if(result != null)
+            {
+                return this.Ok(result);
+            }
+            return NoContent();
         }
 
         [HttpPost]
-        public async Task<ActionResult<bool>> Post(
-            [FromBody] Offer offer
+        public async Task<IActionResult> Post(
+            [FromBody] OfferDTO offer
         )
         {
-            bool result;
+            OfferDTO result;
             try
             {
                 result = await this.offerBl.CreateOffer(offer).ConfigureAwait(false);
@@ -65,10 +69,10 @@ namespace Marketplace.Api.Controllers
             catch (Exception ex)
             {
                 this.logger?.LogError(ex, ex.Message);
-                return this.StatusCode(StatusCodes.Status500InternalServerError, "Server Error.");
+                return this.StatusCode(StatusCodes.Status400BadRequest, "Model is not valid");
             }
 
-            return this.Ok(result);
+            return this.CreatedAtAction(nameof(offerBl.GetOfferById), new {Title = result.Title}, result);
         }
     }
 }

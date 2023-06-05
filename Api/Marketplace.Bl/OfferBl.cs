@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Marketplace.Core.Bl;
 using Marketplace.Core.Model;
 using Marketplace.Core.Dal;
+using System;
 
 namespace Marketplace.Bl
 {
@@ -15,12 +16,17 @@ namespace Marketplace.Bl
             this.offerRepository = offerRepository;
         }
 
-        public Task<bool> CreateOffer(Offer offer)
+        public Task<OfferDTO> CreateOffer(OfferDTO offer)
         {
             return offerRepository.CreateOffer(offer);
         }
 
-        public async Task<IEnumerable<Offer>> GetOffersAsync(int pageNumber, int pageSize)
+        public async Task<OfferDTO> GetOfferById(Guid id)
+        {
+           return await offerRepository.GetOfferById(id);
+        }
+
+        public async Task<IEnumerable<OfferDTO>> GetOffersAsync(int pageNumber, int pageSize)
         {
             return await offerRepository.GetOffersByPageIndex(pageNumber, pageSize).ConfigureAwait(false);
         }

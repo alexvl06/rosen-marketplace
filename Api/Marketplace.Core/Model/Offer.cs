@@ -28,7 +28,7 @@ public class Offer
     /// <value>
     ///     The category identifier.
     /// </value>
-    public string CategoryName { get; set; }
+
 
     /// <summary>
     ///     Gets or sets the description.
@@ -92,7 +92,7 @@ public class Offer
     /// <value>
     ///     The user identifier.
     /// </value>
-    public string Username { get; set; }
+
 
 
     public int UserId {get; set;}
