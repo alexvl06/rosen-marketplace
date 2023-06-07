@@ -1,7 +1,12 @@
-Use Sales
+USE [Sales]
+GO
+/****** Object:  StoredProcedure [marketplace].[WriteOrderProduct]    Script Date: 5/06/2023 9:46:45 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE OR ALTER PROCEDURE marketplace.WriteOrderProduct
+ALTER   PROCEDURE [marketplace].[WriteOrderProduct]
     @OrderId int,
     @ProductId int = NULL,
     @Delete bit = 0,
@@ -29,7 +34,7 @@ BEGIN
 -- CUD using MERGE statement
 	IF @Delete !=0
 	BEGIN
-		DELETE FROM [marketPlace].[OrderProduct] WHERE ProductId = @ProductId;
+		DELETE FROM [marketPlace].[OrderProduct] WHERE ProductId = @ProductId AND OrderId = @OrderId;
 	END
 	ELSE
 	BEGIN
@@ -41,11 +46,10 @@ BEGIN
 			@UnitPrice AS UnitPrice,
 			@TotalPrice AS TotalPrice
 		) AS source
-		ON (target.ProductId = source.ProductId)
+		ON (target.ProductId = source.ProductId AND target.OrderId = source.OrderId)
 
 		WHEN MATCHED THEN
 			UPDATE SET
-				target.OrderId = source.OrderId,
 				target.Qty = source.Qty,
 				target.UnitPrice = source.UnitPrice,
 				target.TotalPrice = source.TotalPrice
@@ -57,4 +61,3 @@ BEGIN
 
 END
 
-GO

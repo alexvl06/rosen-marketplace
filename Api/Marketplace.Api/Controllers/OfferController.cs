@@ -72,7 +72,7 @@ namespace Marketplace.Api.Controllers
                 return this.StatusCode(StatusCodes.Status400BadRequest, "Model is not valid");
             }
 
-            return this.CreatedAtAction(nameof(offerBl.GetOfferById), new {Title = result.Title}, result);
+            return this.CreatedAtAction(nameof(Get), result);
         }
     }
 }

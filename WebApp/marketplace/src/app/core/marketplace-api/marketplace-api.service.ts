@@ -35,7 +35,7 @@ export class MarketplaceApiService {
   }
 
   postOffer(offer:OfferModel) {
-    return this.http.post<boolean>(`${environment.URL}/Offer`,offer);
+    return this.http.post<OfferModel>(`${environment.URL}/Offer`,offer);
   }
 
   getCategories(): Observable<CategoryModel[]> {
